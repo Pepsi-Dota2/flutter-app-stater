@@ -15,16 +15,28 @@ class LoginPage extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 300 , horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 300, horizontal: 20),
           child: Column(
             children: [
-              const CustomFormField(name: "email", hintText: 'email',
-  obscureText: true,),
+              const CustomFormField(
+                name: "email",
+                hintText: 'email',
+                obscureText: true,
+              ),
               const Gap(20),
-              const CustomFormField(name: "password" ,  hintText: 'Password',
-  obscureText: true,),
+              const CustomFormField(
+                name: "password",
+                hintText: 'Password',
+                obscureText: true,
+              ),
               const Gap(30),
-              CustomButtonSubmit(text: 'Login', colorBt: Colors.amber, height: 50 , radius: BorderRadius.circular(10), onTab:(){},),
+              CustomButtonSubmit(
+                text: 'Login',
+                colorBt: Colors.amber,
+                height: 50,
+                radius: BorderRadius.circular(10),
+                onTab: () {},
+              ),
             ],
           ),
         ),
