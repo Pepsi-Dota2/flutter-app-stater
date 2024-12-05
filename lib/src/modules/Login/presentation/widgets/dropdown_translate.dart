@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class DropdownTranslate extends StatelessWidget {
-  final String value; // Selected value
-  final List<DropdownMenuItem<String>> items; // List of dropdown items
-  final ValueChanged<String?>? onChanged; // Callback when a new value is selected
-  final Color? iconColor; // Color of the dropdown icon
-  final double? iconSize; // Size of the dropdown icon
-  final TextStyle? textStyle; // Style for text
-  final Color? dropdownColor; // Dropdown background color
-  final BorderRadius? borderRadius; // Dropdown border radius
+  final String value;
+  final List<DropdownMenuItem<String>> items;
+  final Function(String?) onChanged;
+  final Color? iconColor;
+  final double? iconSize;
+  final TextStyle? textStyle;
+  final Color? dropdownColor;
+  final BorderRadius? borderRadius;
 
   const DropdownTranslate({
     super.key,
@@ -36,7 +36,8 @@ class DropdownTranslate extends StatelessWidget {
             color: iconColor,
             size: iconSize,
           ),
-          style: textStyle ?? const TextStyle(color: Colors.black, fontSize: 16),
+          style:
+              textStyle ?? const TextStyle(color: Colors.black, fontSize: 16),
           dropdownColor: dropdownColor,
           borderRadius: borderRadius ?? BorderRadius.circular(8),
         ),

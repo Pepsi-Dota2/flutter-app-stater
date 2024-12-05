@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_stater/src/core/constant/constant.dart';
+import 'package:flutter_app_stater/src/modules/Login/presentation/widgets/form_dropdown.dart';
 import 'package:flutter_app_stater/src/widgets/custom_birthday_selector.dart';
 import 'package:flutter_app_stater/src/widgets/custom_button_submit.dart';
 import 'package:flutter_app_stater/src/widgets/custom_form_file.dart';
-import 'package:flutter_app_stater/src/widgets/custom_gender_selector.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gap/gap.dart';
 
 @RoutePage()
@@ -14,6 +14,15 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> genderOptions = ['Male', 'Female', 'Other'];
+    final province =
+        Province.values.map((province) => province.englishName).toList();
+    final villages = VillageHelper.getAllVillages();
+    final List<String> _countries = [
+      'Laos PDR',
+      'Thailand',
+      'Vietnam',
+      'Cambodia'
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
@@ -24,8 +33,8 @@ class RegisterPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Perasonal information",
+              const Text(
+                "Personal information",
                 style: TextStyle(fontSize: 20),
               ),
               const Gap(10),
@@ -47,13 +56,18 @@ class RegisterPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: CustomGenderDropdown(
+                    child: CustomDropdownFormField(
                       name: 'gender',
-                      label: 'Gender',
-                      options: genderOptions,
-                      initialValue: 'Male',
+                      title: 'Gender',
+                      initialValue: genderOptions.first,
+                      items: genderOptions,
+                      onChanged: (value) {
+                        // setState(() {
+                        //   _selectedGender = value;
+                        // });
+                      },
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
+                        if (value == null) {
                           return 'Please select your gender';
                         }
                         return null;
@@ -63,17 +77,11 @@ class RegisterPage extends StatelessWidget {
                   const Gap(20),
                   Expanded(
                     child: FormBuilderBirthdaySelector(
+                      title: "Birthday",
                       name: 'birthday',
-                      hintText: 'Select your birthday',
                       initialDate: DateTime(2000, 1, 1),
                       firstDate: DateTime(1900),
                       lastDate: DateTime.now(),
-                      validator: (DateTime? value) {
-                        if (value == null) {
-                          return 'Please select your birthday';
-                        }
-                        return null;
-                      },
                     ),
                   ),
                 ],
@@ -126,6 +134,42 @@ class RegisterPage extends StatelessWidget {
               ),
               const Gap(20),
               const Text("Address information"),
+              const Gap(20),
+              CustomDropdownFormField(
+                title: "Country",
+                name: "name",
+                items: _countries,
+                initialValue: _countries.first,
+                onChanged: (value) {
+                  // setState(() {
+                  //   _selectedCountry = value;
+                  // });
+                },
+              ),
+              const Gap(20),
+              CustomDropdownFormField(
+                title: "Province",
+                name: "province",
+                items: province.toList(),
+                initialValue: province.first,
+                onChanged: (value) {
+                  // setState(() {
+                  //   _selectedCountry = value;
+                  // });
+                },
+              ),
+              const Gap(20),
+              CustomDropdownFormField(
+                title: "Village",
+                name: "village",
+                items: villages,
+                initialValue: villages.first,
+                onChanged: (value) {
+                  if (value != null) {
+                    print('Selected village: $value');
+                  }
+                },
+              ),
               const Gap(20),
               const Text("Confirm password"),
               const Gap(20),

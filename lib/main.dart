@@ -1,9 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_stater/src/core/config/di/config_dependencies.dart';
 import 'package:flutter_app_stater/src/core/routers/router.dart';
 
-void main() {
-  runApp(MyHomePage());
+void main() async {
+  await configureDependencies();
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en' , 'US'), Locale('la' , 'LA')],
+      path: "assets/translations",
+      fallbackLocale: const Locale('en'), // Fallback locale
+      child: MyHomePage(),
+    ),
+  );
 }
 
 class MyHomePage extends StatelessWidget {
@@ -13,8 +23,15 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: _appRouter.config()
-    );
+        // localizationsDelegates: context.localizationDelegates,
+        localizationsDelegates: [
+        EasyLocalization.of(context)!.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        DefaultMaterialLocalizations.delegate,
+      ],
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        debugShowCheckedModeBanner: false,
+        routerConfig: _appRouter.config());
   }
 }
