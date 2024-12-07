@@ -3,4 +3,11 @@ enum DataStatus {
   loading,
   success,
   failure,
+  error
+}
+
+enum Gender {
+  male,
+  female,
+  other
 }

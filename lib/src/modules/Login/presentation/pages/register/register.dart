@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_stater/src/core/constant/constant.dart';
+import 'package:flutter_app_stater/src/core/constant/enum.dart';
 import 'package:flutter_app_stater/src/modules/Login/presentation/widgets/form_dropdown.dart';
 import 'package:flutter_app_stater/src/widgets/custom_birthday_selector.dart';
 import 'package:flutter_app_stater/src/widgets/custom_button_submit.dart';
@@ -13,10 +14,9 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> genderOptions = ['Male', 'Female', 'Other'];
-    final province =
-        Province.values.map((province) => province.englishName).toList();
+    final province = Province.values.map((province) => province.englishName).toList();
     final villages = VillageHelper.getAllVillages();
+    final gender = Gender.values.map((gender)=> gender.name).toList();
     final List<String> _countries = [
       'Laos PDR',
       'Thailand',
@@ -59,8 +59,8 @@ class RegisterPage extends StatelessWidget {
                     child: CustomDropdownFormField(
                       name: 'gender',
                       title: 'Gender',
-                      initialValue: genderOptions.first,
-                      items: genderOptions,
+                      initialValue: gender.first ,
+                      items: gender,
                       onChanged: (value) {
                         // setState(() {
                         //   _selectedGender = value;
