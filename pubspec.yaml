@@ -53,6 +53,7 @@ dependencies:
   dropdown_search: ^6.0.1
   carousel_slider: ^5.0.0
   skeletonizer: ^1.4.2
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
