@@ -8,7 +8,7 @@ void main() async {
   await configureDependencies();
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en' , 'US'), Locale('la' , 'LA')],
+      supportedLocales: const [Locale('en'), Locale('la')],
       path: "assets/translations",
       fallbackLocale: const Locale('en'), // Fallback locale
       child: MyHomePage(),

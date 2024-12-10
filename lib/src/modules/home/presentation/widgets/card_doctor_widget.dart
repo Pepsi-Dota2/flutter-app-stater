@@ -13,7 +13,8 @@ class CardDoctorWidget extends StatelessWidget {
     this.onFavoritePressed,
     this.isFavorite = false,
     this.isLoading,
-    required this.ratingScore, required this.rating,
+    required this.ratingScore,
+    required this.rating,
   });
 
   final String imageUrl;
@@ -124,9 +125,16 @@ class CardDoctorWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavorite ? Colors.redAccent : Colors.grey,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: Icon(
+                      isFavorite
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_border_rounded,
+                      color: isFavorite ? Colors.redAccent : Colors.grey,
+                      size: 25,
+                      key: ValueKey<bool>(isFavorite),
+                    ),
                   ),
                 ),
               ),

@@ -18,6 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeState {
   DataStatus get status => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  NavbarItem get navbarItem => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
+  bool get onClickFav => throw _privateConstructorUsedError;
+  int get favorites => throw _privateConstructorUsedError;
+  List<int> get favoriteDoctors => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -29,7 +34,14 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({DataStatus status, bool isLoading});
+  $Res call(
+      {DataStatus status,
+      bool isLoading,
+      NavbarItem navbarItem,
+      int index,
+      bool onClickFav,
+      int favorites,
+      List<int> favoriteDoctors});
 }
 
 /// @nodoc
@@ -47,6 +59,11 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? status = null,
     Object? isLoading = null,
+    Object? navbarItem = null,
+    Object? index = null,
+    Object? onClickFav = null,
+    Object? favorites = null,
+    Object? favoriteDoctors = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -57,6 +74,26 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      navbarItem: null == navbarItem
+          ? _value.navbarItem
+          : navbarItem // ignore: cast_nullable_to_non_nullable
+              as NavbarItem,
+      index: null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      onClickFav: null == onClickFav
+          ? _value.onClickFav
+          : onClickFav // ignore: cast_nullable_to_non_nullable
+              as bool,
+      favorites: null == favorites
+          ? _value.favorites
+          : favorites // ignore: cast_nullable_to_non_nullable
+              as int,
+      favoriteDoctors: null == favoriteDoctors
+          ? _value.favoriteDoctors
+          : favoriteDoctors // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -69,7 +106,14 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DataStatus status, bool isLoading});
+  $Res call(
+      {DataStatus status,
+      bool isLoading,
+      NavbarItem navbarItem,
+      int index,
+      bool onClickFav,
+      int favorites,
+      List<int> favoriteDoctors});
 }
 
 /// @nodoc
@@ -85,6 +129,11 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? isLoading = null,
+    Object? navbarItem = null,
+    Object? index = null,
+    Object? onClickFav = null,
+    Object? favorites = null,
+    Object? favoriteDoctors = null,
   }) {
     return _then(_$HomeStateImpl(
       status: null == status
@@ -95,6 +144,26 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      navbarItem: null == navbarItem
+          ? _value.navbarItem
+          : navbarItem // ignore: cast_nullable_to_non_nullable
+              as NavbarItem,
+      index: null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      onClickFav: null == onClickFav
+          ? _value.onClickFav
+          : onClickFav // ignore: cast_nullable_to_non_nullable
+              as bool,
+      favorites: null == favorites
+          ? _value.favorites
+          : favorites // ignore: cast_nullable_to_non_nullable
+              as int,
+      favoriteDoctors: null == favoriteDoctors
+          ? _value._favoriteDoctors
+          : favoriteDoctors // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -103,7 +172,14 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
-      {this.status = DataStatus.initial, this.isLoading = false});
+      {this.status = DataStatus.initial,
+      this.isLoading = false,
+      this.navbarItem = NavbarItem.home,
+      this.index = 0,
+      this.onClickFav = false,
+      this.favorites = 0,
+      final List<int> favoriteDoctors = const []})
+      : _favoriteDoctors = favoriteDoctors;
 
   @override
   @JsonKey()
@@ -111,10 +187,30 @@ class _$HomeStateImpl implements _HomeState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final NavbarItem navbarItem;
+  @override
+  @JsonKey()
+  final int index;
+  @override
+  @JsonKey()
+  final bool onClickFav;
+  @override
+  @JsonKey()
+  final int favorites;
+  final List<int> _favoriteDoctors;
+  @override
+  @JsonKey()
+  List<int> get favoriteDoctors {
+    if (_favoriteDoctors is EqualUnmodifiableListView) return _favoriteDoctors;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_favoriteDoctors);
+  }
 
   @override
   String toString() {
-    return 'HomeState(status: $status, isLoading: $isLoading)';
+    return 'HomeState(status: $status, isLoading: $isLoading, navbarItem: $navbarItem, index: $index, onClickFav: $onClickFav, favorites: $favorites, favoriteDoctors: $favoriteDoctors)';
   }
 
   @override
@@ -124,11 +220,28 @@ class _$HomeStateImpl implements _HomeState {
             other is _$HomeStateImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.navbarItem, navbarItem) ||
+                other.navbarItem == navbarItem) &&
+            (identical(other.index, index) || other.index == index) &&
+            (identical(other.onClickFav, onClickFav) ||
+                other.onClickFav == onClickFav) &&
+            (identical(other.favorites, favorites) ||
+                other.favorites == favorites) &&
+            const DeepCollectionEquality()
+                .equals(other._favoriteDoctors, _favoriteDoctors));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      isLoading,
+      navbarItem,
+      index,
+      onClickFav,
+      favorites,
+      const DeepCollectionEquality().hash(_favoriteDoctors));
 
   @JsonKey(ignore: true)
   @override
@@ -138,13 +251,29 @@ class _$HomeStateImpl implements _HomeState {
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState({final DataStatus status, final bool isLoading}) =
-      _$HomeStateImpl;
+  const factory _HomeState(
+      {final DataStatus status,
+      final bool isLoading,
+      final NavbarItem navbarItem,
+      final int index,
+      final bool onClickFav,
+      final int favorites,
+      final List<int> favoriteDoctors}) = _$HomeStateImpl;
 
   @override
   DataStatus get status;
   @override
   bool get isLoading;
+  @override
+  NavbarItem get navbarItem;
+  @override
+  int get index;
+  @override
+  bool get onClickFav;
+  @override
+  int get favorites;
+  @override
+  List<int> get favoriteDoctors;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>
