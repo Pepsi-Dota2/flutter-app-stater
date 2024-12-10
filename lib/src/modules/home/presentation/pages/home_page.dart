@@ -1,13 +1,19 @@
+// import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_stater/src/core/constant/enum.dart';
+import 'package:flutter_app_stater/src/core/routers/router.dart';
 import 'package:flutter_app_stater/src/modules/home/domain/models/category_model.dart';
 import 'package:flutter_app_stater/src/modules/home/domain/models/doctor_model.dart';
 import 'package:flutter_app_stater/src/modules/home/presentation/cubit/home_cubit.dart';
 import 'package:flutter_app_stater/src/modules/home/presentation/widgets/carousel.dart';
 import 'package:flutter_app_stater/src/modules/home/presentation/widgets/search_widget.dart';
 import 'package:flutter_app_stater/src/modules/home/presentation/widgets/card_doctor_widget.dart';
+import 'package:flutter_app_stater/src/modules/message/presentation/page/message.dart';
+import 'package:flutter_app_stater/src/modules/profile/presentation/page/profile.dart';
 import 'package:flutter_app_stater/src/widgets/custom_category.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -24,88 +30,138 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
       child: this,
     );
   }
+
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<HomeCubit>();
+    final List<DoctorModel> itemDoctor = DoctorModel.defaultCategories;
+    final List<CategoryModel> itemCategory = CategoryModel.defaultCategories;
     return Scaffold(
+      bottomNavigationBar: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          return AnimatedBottomNavigationBar(
+            activeIndex: state.index,
+            icons: const [
+              Icons.home,
+              Icons.message,
+              Icons.person,
+            ],
+            inactiveColor: Colors.grey,
+            gapLocation: GapLocation.none,
+            notchSmoothness: NotchSmoothness.values[state.index],
+            leftCornerRadius: 32,
+            rightCornerRadius: 32,
+            onTap: (index) {
+              if (index == 0) {
+                cubit.getNavBarItem(NavbarItem.home);
+              } else if (index == 1) {
+                cubit.getNavBarItem(NavbarItem.message);
+              } else if (index == 2) {
+                cubit.getNavBarItem(NavbarItem.profile);
+              }
+            },
+          );
+        },
+      ),
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
-          return SingleChildScrollView(
-            child: SafeArea(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 6, vertical: 20),
-                child: Column(
-                  children: [
-                    _buildHeader(),
-                    const Gap(10),
-                    SearchWidget(
-                      onPress: () {
-                        context.read<HomeCubit>().refreshData();
-                      },
-                      onChange: (value) {
-                        debugPrint(value);
-                      },
-                    ),
-                    const Gap(20),
-                    const CustomCarouselWidget(),
-                    //Category widget
-                    const Gap(10),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Department",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+          if (state.navbarItem == NavbarItem.home) {
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 20),
+                  child: Column(
+                    children: [
+                      _buildHeader(),
+                      const Gap(10),
+                      SearchWidget(
+                        onPress: () {
+                          context.read<HomeCubit>().refreshData();
+                        },
+                        onChange: (value) {
+                          debugPrint(value);
+                        },
+                      ),
+                      const Gap(20),
+                      const CustomCarouselWidget(),
+                      const Gap(10),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Department",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "See All",
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.15,
                         ),
-                        Text(
-                          "See All",
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    Container(
-                         constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height * 0.09,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: itemCategory.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final category = CategoryModel.defaultCategories[index];
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              child: CustomCategory(
+                                index: index,
+                                name: category.name,
+                                icon: category.icon,
+                                onTap: () {},
+                                iconColor: category.color,
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 4,
-                        itemBuilder: (BuildContext context, int index) {
-                          final category = CategoryModel.defaultCategories[index];
-                          return CustomCategory(name:category.name, icon: category.icon, onTap: () {  }, iconColor: category.color,);
-                        },
+                      Container(
+                        constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.42,
+                        ),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: itemDoctor.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final doctor = DoctorModel.defaultCategories[index];
+                            return InkWell(
+                              onTap: () {
+                                context.router.push(const DoctorDetailRoute());
+                              },
+                              child: CardDoctorWidget(
+                                rating: "rating :",
+                                imageUrl: doctor.images,
+                                name: doctor.name,
+                                specialization: doctor.desc,
+                                ratingScore: doctor.rating,
+                                onFavoritePressed: (){
+                                  cubit.toggleFavorite(index);
+                                },
+                                isFavorite:  state.favoriteDoctors.contains(index),
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-
-                    //card Doctor
-                    Container(
-                      constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height * 0.42,
-                      ),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        itemBuilder: (BuildContext context, int index) {
-                          final doctor  = DoctorModel.defaultCategories[index];
-                          return Flexible(
-                            child: CardDoctorWidget(
-                              rating: "rating :",
-                              imageUrl: doctor.images,
-                              name: doctor.name,
-                              specialization: doctor.desc,
-                              ratingScore: doctor.rating,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
+            );
+          } else if (state.navbarItem == NavbarItem.message) {
+            return const MessagePage();
+          } else if (state.navbarItem == NavbarItem.profile) {
+            return const ProfilePage();
+          }
+          return const Center(child: Text("Page Not Found"));
         },
       ),
     );
