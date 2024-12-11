@@ -57,6 +57,11 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(favoriteDoctors: currentFavorites));
   }
 
+   void updateDoctorRating(int doctorIndex, double rating) {
+    final Map<int, double> updatedRatings = Map.from(state.doctorRatings);
+    updatedRatings[doctorIndex] = rating;
+    emit(state.copyWith(doctorRatings: updatedRatings));
+  }
 
   void refreshData() {
     _initializeData();

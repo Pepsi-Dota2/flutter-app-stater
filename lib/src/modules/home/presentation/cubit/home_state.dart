@@ -10,6 +10,6 @@ class HomeState with _$HomeState {
     @Default(false) bool onClickFav,
     @Default(0) int favorites,
     @Default([]) List<int> favoriteDoctors, 
-    
+    @Default({}) Map<int, double> doctorRatings,
   }) = _HomeState;
 }

@@ -23,6 +23,7 @@ mixin _$HomeState {
   bool get onClickFav => throw _privateConstructorUsedError;
   int get favorites => throw _privateConstructorUsedError;
   List<int> get favoriteDoctors => throw _privateConstructorUsedError;
+  Map<int, double> get doctorRatings => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -41,7 +42,8 @@ abstract class $HomeStateCopyWith<$Res> {
       int index,
       bool onClickFav,
       int favorites,
-      List<int> favoriteDoctors});
+      List<int> favoriteDoctors,
+      Map<int, double> doctorRatings});
 }
 
 /// @nodoc
@@ -64,6 +66,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? onClickFav = null,
     Object? favorites = null,
     Object? favoriteDoctors = null,
+    Object? doctorRatings = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -94,6 +97,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.favoriteDoctors
           : favoriteDoctors // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      doctorRatings: null == doctorRatings
+          ? _value.doctorRatings
+          : doctorRatings // ignore: cast_nullable_to_non_nullable
+              as Map<int, double>,
     ) as $Val);
   }
 }
@@ -113,7 +120,8 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       int index,
       bool onClickFav,
       int favorites,
-      List<int> favoriteDoctors});
+      List<int> favoriteDoctors,
+      Map<int, double> doctorRatings});
 }
 
 /// @nodoc
@@ -134,6 +142,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? onClickFav = null,
     Object? favorites = null,
     Object? favoriteDoctors = null,
+    Object? doctorRatings = null,
   }) {
     return _then(_$HomeStateImpl(
       status: null == status
@@ -164,6 +173,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value._favoriteDoctors
           : favoriteDoctors // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      doctorRatings: null == doctorRatings
+          ? _value._doctorRatings
+          : doctorRatings // ignore: cast_nullable_to_non_nullable
+              as Map<int, double>,
     ));
   }
 }
@@ -178,8 +191,10 @@ class _$HomeStateImpl implements _HomeState {
       this.index = 0,
       this.onClickFav = false,
       this.favorites = 0,
-      final List<int> favoriteDoctors = const []})
-      : _favoriteDoctors = favoriteDoctors;
+      final List<int> favoriteDoctors = const [],
+      final Map<int, double> doctorRatings = const {}})
+      : _favoriteDoctors = favoriteDoctors,
+        _doctorRatings = doctorRatings;
 
   @override
   @JsonKey()
@@ -208,9 +223,18 @@ class _$HomeStateImpl implements _HomeState {
     return EqualUnmodifiableListView(_favoriteDoctors);
   }
 
+  final Map<int, double> _doctorRatings;
+  @override
+  @JsonKey()
+  Map<int, double> get doctorRatings {
+    if (_doctorRatings is EqualUnmodifiableMapView) return _doctorRatings;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_doctorRatings);
+  }
+
   @override
   String toString() {
-    return 'HomeState(status: $status, isLoading: $isLoading, navbarItem: $navbarItem, index: $index, onClickFav: $onClickFav, favorites: $favorites, favoriteDoctors: $favoriteDoctors)';
+    return 'HomeState(status: $status, isLoading: $isLoading, navbarItem: $navbarItem, index: $index, onClickFav: $onClickFav, favorites: $favorites, favoriteDoctors: $favoriteDoctors, doctorRatings: $doctorRatings)';
   }
 
   @override
@@ -229,7 +253,9 @@ class _$HomeStateImpl implements _HomeState {
             (identical(other.favorites, favorites) ||
                 other.favorites == favorites) &&
             const DeepCollectionEquality()
-                .equals(other._favoriteDoctors, _favoriteDoctors));
+                .equals(other._favoriteDoctors, _favoriteDoctors) &&
+            const DeepCollectionEquality()
+                .equals(other._doctorRatings, _doctorRatings));
   }
 
   @override
@@ -241,7 +267,8 @@ class _$HomeStateImpl implements _HomeState {
       index,
       onClickFav,
       favorites,
-      const DeepCollectionEquality().hash(_favoriteDoctors));
+      const DeepCollectionEquality().hash(_favoriteDoctors),
+      const DeepCollectionEquality().hash(_doctorRatings));
 
   @JsonKey(ignore: true)
   @override
@@ -258,7 +285,8 @@ abstract class _HomeState implements HomeState {
       final int index,
       final bool onClickFav,
       final int favorites,
-      final List<int> favoriteDoctors}) = _$HomeStateImpl;
+      final List<int> favoriteDoctors,
+      final Map<int, double> doctorRatings}) = _$HomeStateImpl;
 
   @override
   DataStatus get status;
@@ -274,6 +302,8 @@ abstract class _HomeState implements HomeState {
   int get favorites;
   @override
   List<int> get favoriteDoctors;
+  @override
+  Map<int, double> get doctorRatings;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>

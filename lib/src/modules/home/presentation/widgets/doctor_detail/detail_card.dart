@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_stater/src/core/constant/constant_colors.dart';
 
 class DetailCard extends StatelessWidget {
   final IconData icon;
@@ -17,6 +18,9 @@ class DetailCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(
+          color: AppColors.primary
+        ),
       ),
       elevation: 2,
       child: Container(

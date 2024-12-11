@@ -32,11 +32,5 @@ class DetailCardModel {
       subtitle: "Reviews",
       iconColor: Colors.orange,
     ),
-    DetailCardModel(
-      icon: Icons.medical_services_outlined,
-      title: "50+",
-      subtitle: "Services",
-      iconColor: Colors.purple,
-    ),
   ];
 }

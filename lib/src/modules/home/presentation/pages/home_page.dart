@@ -134,18 +134,20 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
                             final doctor = DoctorModel.defaultCategories[index];
                             return InkWell(
                               onTap: () {
-                                context.router.push(const DoctorDetailRoute());
+                                context.router.push( DoctorDetailRoute(doctor: doctor));
                               },
                               child: CardDoctorWidget(
-                                rating: "rating :",
                                 imageUrl: doctor.images,
                                 name: doctor.name,
                                 specialization: doctor.desc,
-                                ratingScore: doctor.rating,
                                 onFavoritePressed: (){
                                   cubit.toggleFavorite(index);
                                 },
                                 isFavorite:  state.favoriteDoctors.contains(index),
+                                selectedRating:state.doctorRatings[index] ?? 0,
+                                onRatingUpdate: (rating){
+                                  cubit.updateDoctorRating(index, rating);
+                                },
                               ),
                             );
                           },

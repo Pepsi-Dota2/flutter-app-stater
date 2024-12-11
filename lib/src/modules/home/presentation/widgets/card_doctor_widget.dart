@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_stater/src/widgets/custom_rating_bar.dart';
+import 'package:flutter_app_stater/src/modules/home/presentation/widgets/rating_bar.dart';
 import 'package:gap/gap.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -13,8 +13,10 @@ class CardDoctorWidget extends StatelessWidget {
     this.onFavoritePressed,
     this.isFavorite = false,
     this.isLoading,
-    required this.ratingScore,
-    required this.rating,
+    this.ratingScore,
+    this.rating,
+    this.onRatingUpdate,
+    required this.selectedRating,
   });
 
   final String imageUrl;
@@ -23,8 +25,10 @@ class CardDoctorWidget extends StatelessWidget {
   final Function()? onFavoritePressed;
   final bool isFavorite;
   final bool? isLoading;
-  final double ratingScore;
-  final String rating;
+  final double? ratingScore;
+  final String? rating;
+  final Function(double)? onRatingUpdate;
+  final double selectedRating;
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +96,11 @@ class CardDoctorWidget extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       const Gap(10),
-                      Row(
-                        children: [
-                          Text(rating),
-                          Text(ratingScore.toString()),
-                        ],
-                      ),
-                      const CustomRatingBarWidget(rating: "Doctor Rating")
+                      CustomRatingBarWidget(
+                        rating: "Doctor Rating",
+                        onRatingUpdate: onRatingUpdate,
+                        selectedRating: selectedRating,
+                        )
                     ],
                   ),
                 ),

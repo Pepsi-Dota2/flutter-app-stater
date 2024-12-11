@@ -16,9 +16,14 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     DoctorDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<DoctorDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const DoctorDetailPage(),
+        child: WrappedRoute(
+            child: DoctorDetailPage(
+          key: args.key,
+          doctor: args.doctor,
+        )),
       );
     },
     HomeRoute.name: (routeData) {
@@ -39,6 +44,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MessagePage(),
       );
     },
+    PaymentRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const PaymentPage()),
+      );
+    },
     ProfileRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -56,16 +67,40 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [DoctorDetailPage]
-class DoctorDetailRoute extends PageRouteInfo<void> {
-  const DoctorDetailRoute({List<PageRouteInfo>? children})
-      : super(
+class DoctorDetailRoute extends PageRouteInfo<DoctorDetailRouteArgs> {
+  DoctorDetailRoute({
+    Key? key,
+    required DoctorModel doctor,
+    List<PageRouteInfo>? children,
+  }) : super(
           DoctorDetailRoute.name,
+          args: DoctorDetailRouteArgs(
+            key: key,
+            doctor: doctor,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'DoctorDetailRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<DoctorDetailRouteArgs> page =
+      PageInfo<DoctorDetailRouteArgs>(name);
+}
+
+class DoctorDetailRouteArgs {
+  const DoctorDetailRouteArgs({
+    this.key,
+    required this.doctor,
+  });
+
+  final Key? key;
+
+  final DoctorModel doctor;
+
+  @override
+  String toString() {
+    return 'DoctorDetailRouteArgs{key: $key, doctor: $doctor}';
+  }
 }
 
 /// generated route for
@@ -106,6 +141,20 @@ class MessageRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'MessageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PaymentPage]
+class PaymentRoute extends PageRouteInfo<void> {
+  const PaymentRoute({List<PageRouteInfo>? children})
+      : super(
+          PaymentRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PaymentRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
